@@ -39,31 +39,6 @@ defineAllFunctionsForOp(!= , neq)
 
 defineAllFunctions
 
-/*
-Please place the functions into a 3D array where the first index is the first type, the second index is the second type, and the third index is the operation so the array should be of sizes 4x4x4
-
-This is so the first index can be used to get the set of functions usable by a dyn of that type. So in execution you will just need to index the other dyn's type to get the function to use.
-*/
-// std::function<Dyn(const Dyn&, const Dyn&)> allFunctions[TYPE_COUNT][TYPE_COUNT][OP_COUNT]
-// = {
-//     {{add_int_int, sub_int_int, mul_int_int, div_int_int},
-//     {add_int_float, sub_int_float, mul_int_float, div_int_float},
-//     {add_int_string, sub_int_string, mul_int_string, div_int_string},
-//     {add_int_bool, sub_int_bool, mul_int_bool, div_int_bool}},
-//     {{add_float_int, sub_float_int, mul_float_int, div_float_int},
-//     {add_float_float, sub_float_float, mul_float_float, div_float_float},
-//     {add_float_string, sub_float_string, mul_float_string, div_float_string},
-//     {add_float_bool, sub_float_bool, mul_float_bool, div_float_bool}},
-//     {{add_string_int, sub_string_int, mul_string_int, div_string_int},
-//     {add_string_float, sub_string_float, mul_string_float, div_string_float},
-//     {add_string_string, sub_string_string, mul_string_string, div_string_string},
-//     {add_string_bool, sub_string_bool, mul_string_bool, div_string_bool}},
-//     {{add_bool_int, sub_bool_int, mul_bool_int, div_bool_int},
-//     {add_bool_float, sub_bool_float, mul_bool_float, div_bool_float},
-//     {add_bool_string, sub_bool_string, mul_bool_string, div_bool_string},
-//     {add_bool_bool, sub_bool_bool, mul_bool_bool, div_bool_bool}},
-// };
-//please add the comparison operators to the previous functions
 std::function<Dyn(const Dyn&, const Dyn&)> allFunctions[TYPE_COUNT][TYPE_COUNT][OP_COUNT] = {
     {{add_int_int, sub_int_int, mul_int_int, div_int_int, gt_int_int, lt_int_int, gte_int_int, lte_int_int, eq_int_int, neq_int_int},
     {add_int_float, sub_int_float, mul_int_float, div_int_float, gt_int_float, lt_int_float, gte_int_float, lte_int_float, eq_int_float, neq_int_float},

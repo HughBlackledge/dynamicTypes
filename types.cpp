@@ -15,8 +15,6 @@ enum types {
     ERROR,
 };
 
-
-//Get type numbers from types 
 int getType(int n) {
     return INT;
 }

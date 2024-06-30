@@ -9,19 +9,14 @@
 #include<vectorplus.hpp>
 #include<dynamicTypes/string_overloads.cpp>
 
-//Write an include guard
 #ifndef DYN_H 
 #define DYN_H
-
-// typedef std::string string;
 
 std::string operator "" _s(const char* str, size_t) {
     return std::string(str);
 }
 
 const std::string indentString = "  ";
-
-// std::vector<int> operator ""_vvv(std::initializer_list<int> list);
 
 enum ops {
     ADD = 0,
@@ -63,7 +58,7 @@ struct Dyn {
     Prototype prototype;
     int type = ERROR;
     void* data = nullptr;
-    // destructor
+
     std::function<void(void*&)> dataDestructor = nullptr;
     std::function<void(void*&)> assign;
 
@@ -72,13 +67,11 @@ struct Dyn {
         data = new std::string(s);
         prototype = Prototype(type);
         this->dataDestructor = [&](void*& data) {delete (std::string*)data;data = nullptr;};
-        // this->assign = [this,s](void* data) {this->data = new std::string(s);};
         this->assign = [s](void*& data) {data = new std::string(s);};
     }
     Dyn(vectorplus<Dyn> v) {
         type = ARRAY;
         data = new vectorplus<Dyn>(v);
-        // println(v.size());
         prototype = Prototype(type);
         this->dataDestructor = [&](void*& data) {delete (vectorplus<Dyn>*)data;data = nullptr;};
         this->assign = [v](void*& data) {data = new vectorplus<Dyn>(v);};
@@ -119,7 +112,7 @@ struct Dyn {
             data = nullptr;
         }
     }
-    // implement the +, -, *, / operators
+
     Dyn operator+(const Dyn& other) {
         if ((isNoneOperationalType(type) || isNoneOperationalType(other.type))) {
             return Dyn();
@@ -189,7 +182,7 @@ struct Dyn {
         this->assign = [n](void*& data) {data = new T(n);};
         return *this;
     }
-    // implement the comparison operators
+
     void print(int indent = 0) {
         if (type == INT) {
             std::cout << *(int*)data;
@@ -227,13 +220,13 @@ struct Dyn {
         }
     }
     void printObject(int indent) const;
-    // implement access operator
+
     const Dyn& operator[](std::string key) const;
     Dyn& operator[](std::string key);
     Dyn(std::initializer_list<std::pair<std::string, Dyn>> list);
     Dyn map(Dyn mapFunction(Dyn n));
     Dyn filter(bool filter(Dyn n));
-    //Print type name
+
     std::string getTypename() {
         switch (type) {
         case INT:
@@ -335,7 +328,6 @@ bool  Dyn::operator!=(const Dyn& other) {
 }
 
 void println(std::vector<std::string> v) {
-    //Print like so [first,second,...]
     std::cout << "[";
     if (v.size() > 0) {
         std::cout << v[0];

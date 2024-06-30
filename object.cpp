@@ -10,15 +10,15 @@
 struct Object {
     std::map<std::string, Dyn> data;
     Object() {
-        // data = std::map<std::string, const Dyn&>();
+        data = {};
     }
-    //Give me a constructor for an initializer list
+
     Object(std::initializer_list<std::pair<std::string, Dyn>> list) {
         for (auto& [key, value] : list) {
             data[key] = value;
         }
     }
-    //Initialise the object with a map
+
     Object(std::map<std::string, Dyn> map) {
         data = map;
     }
@@ -48,7 +48,6 @@ struct Object {
             }
         }
         println();
-        // println(indent * indentString + "}");
         if (indent == 0) {
             println(indent * indentString + "}");
         }
@@ -57,7 +56,7 @@ struct Object {
     }
     ~Object() {
     }
-    //Add overloads that any binary non assignment operation applied to an object should just give a dyn of error:
+
     Dyn operator+(const Dyn& other) {
         return Dyn();
     }
@@ -118,15 +117,6 @@ struct Object {
     Object operator=(const Dyn& other) {
         return *this;
     }
-    // Object operator=(const Dyn& other) {
-    //     if (other.type == OBJECT) {
-    //         data = extract<Object>(other.data).data;
-    //     }
-    //     else {
-    //         throw std::invalid_argument("Not an object");
-    //     }
-    //     return *this;
-    // }
     std::vector<std::string> keys() {
         std::vector<std::string> result = {};
         for (auto& [key, value] : data) {
@@ -136,7 +126,7 @@ struct Object {
     }
 };
 
-//Write out a constructor for a dyn that takes in an object
+
 Dyn::Dyn(Object o) {
     type = OBJECT;
     data = new Object(o);
@@ -144,7 +134,7 @@ Dyn::Dyn(Object o) {
     this->dataDestructor = [&](void*& data) {delete (Object*)data;data = nullptr;};
     this->assign = [o](void*& data) {data = new Object(o);};
 }
-//initialize with initializer list
+
 Dyn::Dyn(std::initializer_list<std::pair<std::string, Dyn>> list) {
     type = OBJECT;
     data = new Object(list);
@@ -152,8 +142,6 @@ Dyn::Dyn(std::initializer_list<std::pair<std::string, Dyn>> list) {
     this->dataDestructor = [&](void*& data) {delete (Object*)data;data = nullptr;};
     this->assign = [list](void*& data) {data = new Object(list);};
 }
-
-// Dyn Error = Dyn();
 
 const Dyn& Dyn::operator[](std::string key) const {
     if (type != OBJECT) {
